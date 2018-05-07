@@ -27,9 +27,27 @@ RCT_EXPORT_MODULE()
 {
     self = [super init];
     if (self) {
+        [self initTencentOAuth];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOpenURL:) name:@"RCTOpenURLNotification" object:nil];
     }
     return self;
+}
+
+- (void)initTencentOAuth {
+    NSArray *urlTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleURLTypes"];
+    for (id type in urlTypes) {
+        NSArray *urlSchemes = [type objectForKey:@"CFBundleURLSchemes"];
+        for (id scheme in urlSchemes) {
+            if ([scheme isKindOfClass:[NSString class]]) {
+                NSString *value = (NSString *)scheme;
+                if ([value hasPrefix:@"wx"] && (nil == tencentOAuth)) {
+                    appId = [value substringFromIndex:2];
+                    tencentOAuth = [[TencentOAuth alloc] initWithAppId:appId andDelegate:self];
+                    break;
+                }
+            }
+        }
+    }
 }
 
 - (void)dealloc
@@ -55,19 +73,19 @@ RCT_EXPORT_MODULE()
     return dispatch_get_main_queue();
 }
 
-RCT_EXPORT_METHOD(registerApp:(NSString *)appid
-                  :(RCTResponseSenderBlock)callback)
-{
-    self.appId = appid;
-    callback(@[[WXApi registerApp:appid] ? [NSNull null] : INVOKE_FAILED]);
-}
+// RCT_EXPORT_METHOD(registerApp:(NSString *)appid
+//                   :(RCTResponseSenderBlock)callback)
+// {
+//     self.appId = appid;
+//     callback(@[[WXApi registerApp:appid] ? [NSNull null] : INVOKE_FAILED]);
+// }
 
-RCT_EXPORT_METHOD(registerAppWithDescription:(NSString *)appid
-                  :(NSString *)appdesc
-                  :(RCTResponseSenderBlock)callback)
-{
-    callback(@[[WXApi registerApp:appid withDescription:appdesc] ? [NSNull null] : INVOKE_FAILED]);
-}
+// RCT_EXPORT_METHOD(registerAppWithDescription:(NSString *)appid
+//                   :(NSString *)appdesc
+//                   :(RCTResponseSenderBlock)callback)
+// {
+//     callback(@[[WXApi registerApp:appid withDescription:appdesc] ? [NSNull null] : INVOKE_FAILED]);
+// }
 
 RCT_EXPORT_METHOD(isWXAppInstalled:(RCTResponseSenderBlock)callback)
 {

@@ -61,6 +61,8 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
 
     public WeChatModule(ReactApplicationContext context) {
         super(context);
+        appId = this.getAppID(context);
+        api = WXAPIFactory.createWXAPI(this.getReactApplicationContext().getBaseContext(), appid, true);
     }
 
     @Override
@@ -100,12 +102,12 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
         }
     }
 
-    @ReactMethod
-    public void registerApp(String appid, Callback callback) {
-        this.appId = appid;
-        api = WXAPIFactory.createWXAPI(this.getReactApplicationContext().getBaseContext(), appid, true);
-        callback.invoke(null, api.registerApp(appid));
-    }
+    // @ReactMethod
+    // public void registerApp(String appid, Callback callback) {
+    //     this.appId = appid;
+    //     api = WXAPIFactory.createWXAPI(this.getReactApplicationContext().getBaseContext(), appid, true);
+    //     callback.invoke(null, api.registerApp(appid));
+    // }
 
     @ReactMethod
     public void isWXAppInstalled(Callback callback) {
@@ -227,6 +229,24 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
         } else {
             this._share(scene, data, null, callback);
         }
+    }
+
+    /**
+     * 获取 Wechat SDK App ID
+     * @param reactContext
+     * @return
+     */
+    private String getAppID(ReactApplicationContext reactContext) {
+        try {
+            ApplicationInfo appInfo = reactContext.getPackageManager()
+                .getApplicationInfo(reactContext.getPackageName(),
+                    PackageManager.GET_META_DATA);
+            String key = appInfo.metaData.get("WECHAT_APP_ID").toString();
+            return key;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void _getImage(Uri uri, ResizeOptions resizeOptions, final ImageCallback imageCallback) {
