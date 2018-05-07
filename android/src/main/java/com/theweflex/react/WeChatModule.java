@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import com.facebook.common.executors.UiThreadImmediateExecutorService;
 import com.facebook.common.internal.Files;
 import com.facebook.common.references.CloseableReference;
@@ -62,7 +64,7 @@ public class WeChatModule extends ReactContextBaseJavaModule implements IWXAPIEv
     public WeChatModule(ReactApplicationContext context) {
         super(context);
         appId = this.getAppID(context);
-        api = WXAPIFactory.createWXAPI(this.getReactApplicationContext().getBaseContext(), appid, true);
+        api = WXAPIFactory.createWXAPI(this.getReactApplicationContext().getBaseContext(), appId, true);
     }
 
     @Override
