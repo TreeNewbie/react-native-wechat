@@ -29,7 +29,7 @@ declare module 'react-native-wechat' {
      * @param {String} appid - the app id
      * @return {Promise}
      */
-    export function registerApp (appid: string): Promise<any>
+    // export function registerApp (appid: string): Promise<any>
   
     /**
      * @method registerAppWithDescription
@@ -37,7 +37,7 @@ declare module 'react-native-wechat' {
      * @param {String} appdesc - the app description
      * @return {Promise}
      */
-    export function registerAppWithDescription (appid: string, appdesc: string): Promise<any>
+    // export function registerAppWithDescription (appid: string, appdesc: string): Promise<any>
   
     /**
      * Return if the wechat app is installed in the device.

@@ -1,4 +1,12 @@
+import groovy.json.JsonSlurper
 apply plugin: 'com.android.library'
+
+def computeWechatAppId() {
+  // dynamically retrieve qq app id from package.json
+  def slurper = new JsonSlurper()
+  def json = slurper.parse(file('../../../package.json'), "utf-8")
+  return json.wechat_app_id
+}
 
 android {
   compileSdkVersion 23
@@ -11,6 +19,9 @@ android {
     ndk {
       abiFilters "armeabi-v7a", "x86"
     }
+    manifestPlaceholders = [
+            WECHAT_APP_ID: computeWechatAppId()
+    ]
   }
 }
 
