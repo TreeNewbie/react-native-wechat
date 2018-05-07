@@ -45,9 +45,9 @@ function wrapApi(nativeFunc) {
     return undefined;
   }
   return (...args) => {
-    if (!isAppRegistered) {
-      return Promise.reject(new Error('registerApp required.'));
-    }
+    // if (!isAppRegistered) {
+    //   return Promise.reject(new Error('registerApp required.'));
+    // }
     return new Promise((resolve, reject) => {
       nativeFunc.apply(null, [
         ...args,
