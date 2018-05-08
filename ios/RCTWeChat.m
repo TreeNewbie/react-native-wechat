@@ -40,9 +40,9 @@ RCT_EXPORT_MODULE()
         for (id scheme in urlSchemes) {
             if ([scheme isKindOfClass:[NSString class]]) {
                 NSString *value = (NSString *)scheme;
-                if ([value hasPrefix:@"wx"] && (nil == tencentOAuth)) {
-                    appId = [value substringFromIndex:2];
-                    tencentOAuth = [[TencentOAuth alloc] initWithAppId:appId andDelegate:self];
+                if ([value hasPrefix:@"wx"]) {
+                    self.appId = [value substringFromIndex:2];
+                    [WXApi registerApp:self.appId];
                     break;
                 }
             }
