@@ -41,7 +41,7 @@ RCT_EXPORT_MODULE()
             if ([scheme isKindOfClass:[NSString class]]) {
                 NSString *value = (NSString *)scheme;
                 if ([value hasPrefix:@"wx"]) {
-                    self.appId = [value substringFromIndex:2];
+                    self.appId = value;
                     [WXApi registerApp:self.appId];
                     break;
                 }
