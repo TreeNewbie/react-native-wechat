@@ -30,7 +30,7 @@
 
 React-Native bridge static library for WeChat SDK which requires:
 
-- [x] iOS SDK 1.7.2
+- [x] iOS SDK 1.8.3
 - [x] Android SDK 221
 
 And [react-native-wechat] has the following tracking data in open source world:
