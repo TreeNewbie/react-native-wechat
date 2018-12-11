@@ -1,5 +1,5 @@
 
-declare module 'react-native-wechat' {
+declare module '@treenewbie/react-native-wechat' {
     import { EmitterSubscription } from 'react-native'
     /**
      * `addListener` inherits from `events` module
